@@ -1,0 +1,22 @@
+﻿@model CIS174_TestCoreApp.Models.ViewModel
+
+    <h1>Hello Admin</h1>
+@if (Model.AccessLevel < 2)
+{
+    <h1>You do not have a sufficient access level to view this data</h1>
+}
+@foreach (var student in Model.Students)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            @if (Model.AccessLevel > 2)
+            {
+                <h5 class="card-title">@student.FirstName,  @student.LastName</h5>
+            }
+            @if (Model.AccessLevel >= 8)
+            {
+                <a href="#" class="btn btn-primary">@student.Grade</a>
+            }
+        </div>
+    </div>
+}
