@@ -11,11 +11,8 @@ namespace CIS174_TestCoreApp.Controllers
     {
         public IActionResult Index()
         {
-            var viewModel = new CreatePersonViewModel
-            {
-                School = "DMACC"
-            };
-
+            var viewModel = new CreatePersonViewModel();
+         
             return View(viewModel);
         }
 
