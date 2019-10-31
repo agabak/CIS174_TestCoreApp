@@ -30,6 +30,7 @@ namespace CIS174_TestCoreApp
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IRecipeService, RecipeService>();
+            services.AddScoped<IAccomplishmentService, AccomplishmentService>();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

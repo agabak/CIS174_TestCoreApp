@@ -1,0 +1,35 @@
+﻿@model PersonDetailAccomplishmentViewModel
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-4">
+
+    </div>
+    <div class="col-md-6 col-md-offset-4">
+        <h1>@Model.LastName  -   @Model.FirstName</h1>
+        <div class="col-md-4">
+            <span>
+                City : @Model.City
+                State: @Model.State
+            </span>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Date Accomplishe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var accomplishment in Model.Accomplishments)
+                    {
+                        <tr>
+                            <th>@accomplishment.Name</th>
+                            <td>@accomplishment.DateOfAccomplishment</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

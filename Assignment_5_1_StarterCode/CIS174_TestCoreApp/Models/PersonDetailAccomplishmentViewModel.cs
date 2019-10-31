@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CIS174_TestCoreApp.Entities
+namespace CIS174_TestCoreApp.Models
 {
-    public class Person
+    public class PersonDetailAccomplishmentViewModel
     {
         public int PersonId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime Birthdate { get; set; }
         public string City { get; set; }
         public string State { get; set; }
-
-        public virtual ICollection<Accomplishment> Accomplishments { get; set; }
+        public IEnumerable<AccomplishmentViewModel> Accomplishments { get; set; }
 
     }
 }
-
-
