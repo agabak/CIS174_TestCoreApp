@@ -1,4 +1,47 @@
-﻿
-<div>
+﻿@model  PersonDetailAccomplishmentViewModel
+
+<div class="container">
+    <div>
+        <hr/>
+    </div>
     <h1>Edit</h1>
+    <form asp-action="Edit" asp-controller="Accomplishment" asp-route-id="@Model.PersonId">
+        <div>
+            <input asp-for="PersonId" type="hidden" />
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="alert-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="City"></label>
+            <input asp-for="City" class="form-control" />
+            <span asp-validation-for="City" class="alert-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="State"></label>
+            <input asp-for="State" class="form-control" />
+            <span asp-validation-for="State" class="alert-danger"></span>
+        </div>
+            <strong>Accomplishments</strong>
+            <hr />
+        @foreach (var accomplishment in Model.Accomplishments)
+        {
+            <div class="form-group">
+                <div>
+                    <input asp-for="@accomplishment.Id" type="hidden" />
+                </div>
+                <a asp-action="AccomplishmentEdit" asp-controller="Accomplishment" asp-route-id="@accomplishment.Id">Edit</a>
+                <input  asp-for="@accomplishment.Name" class="form-control" disabled />
+            </div>
+        }
+        <a class="btn btn-primary" asp-action="Detail" asp-controller="Accomplishment">Cancel >></a>
+        <button type="submit" class="btn btn-success">Update</button>
+    </form>
 </div>

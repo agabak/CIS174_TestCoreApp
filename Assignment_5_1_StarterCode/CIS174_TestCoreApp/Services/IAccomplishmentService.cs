@@ -11,5 +11,8 @@ namespace CIS174_TestCoreApp.Services
         IEnumerable<PersonAccomplishmentViewModel> GetAccomplishments();
         PersonDetailAccomplishmentViewModel GetAccomplisment(int id);
         bool Delete(int id);
+        PersonDetailAccomplishmentViewModel Edit(PersonDetailAccomplishmentViewModel model);
+        AccomplishmentViewModel GetSingleAccomplishment(int id);
+        AccomplishmentViewModel UpdateAccomplishmnet(AccomplishmentViewModel model);
     }
 }

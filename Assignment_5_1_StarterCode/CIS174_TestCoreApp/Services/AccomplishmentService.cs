@@ -45,6 +45,7 @@ namespace CIS174_TestCoreApp.Services
                                         State = x.State,
                                         Accomplishments = x.Accomplishments.Select(y => new AccomplishmentViewModel
                                         {
+                                            Id = y.AccomplishmentId,
                                             Name = y.Name,
                                             DateOfAccomplishment = y.DateOfAccomplishment.ToString("MM/dd/yyyy")
                                         })
@@ -63,5 +64,49 @@ namespace CIS174_TestCoreApp.Services
             }
             return false;
         }
+
+        public PersonDetailAccomplishmentViewModel Edit(PersonDetailAccomplishmentViewModel model)
+        {
+            var person = _context.People.Include(x => x.Accomplishments).FirstOrDefault(p => p.PersonId == model.PersonId);
+            if (person != null)
+            {
+                person.FirstName = model.FirstName;
+                person.LastName = model.LastName;
+                person.City = model.City;
+                person.State = model.State;
+                model.Accomplishments = person.Accomplishments.Select(x => new AccomplishmentViewModel
+                                                {
+                                                    Id = x.AccomplishmentId,
+                                                    Name = x.Name,
+                                                    DateOfAccomplishment = x.DateOfAccomplishment.ToString("MM/dd/yyyy")
+                                                 });
+                _context.SaveChanges();
+            }
+
+            return model;
+        }
+
+        public AccomplishmentViewModel GetSingleAccomplishment(int id)
+        {
+            return _context.Accomplishments.Select(x => new AccomplishmentViewModel
+                            {
+                                Id = x.AccomplishmentId,
+                                Name = x.Name,
+                                DateOfAccomplishment = x.DateOfAccomplishment.ToString("MM/dd/yyyy")
+                            }).FirstOrDefault(x => x.Id == id);
+        }
+
+        public AccomplishmentViewModel UpdateAccomplishmnet(AccomplishmentViewModel model)
+        {
+            var accomplishment = _context.Accomplishments.FirstOrDefault(X => X.AccomplishmentId == model.Id);
+            if(accomplishment != null)
+            {
+                accomplishment.Name = model.Name;
+                accomplishment.DateOfAccomplishment = Convert.ToDateTime(model.DateOfAccomplishment);
+                _context.SaveChanges();
+            }
+
+            return model;
+        }
     }
-}
+}  

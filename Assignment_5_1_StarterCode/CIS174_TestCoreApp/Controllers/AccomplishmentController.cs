@@ -1,4 +1,5 @@
-﻿using CIS174_TestCoreApp.Services;
+﻿using CIS174_TestCoreApp.Models;
+using CIS174_TestCoreApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,31 @@ namespace CIS174_TestCoreApp.Controllers
             return View(_accomplishment.GetAccomplisment(id));
         }
 
+        [HttpPost("edit/{id}")]
+        public IActionResult Edit([FromForm] PersonDetailAccomplishmentViewModel model, int id)
+        {
+            if (ModelState.IsValid && model.PersonId == id)
+            {
+                model = _accomplishment.Edit(model);
+            }
+            return View(model);
+        }
+
+        [HttpGet("accomplishmentEdit/{id}")]
+        public IActionResult AccomplishmentEdit(int id)
+        { 
+            return View(_accomplishment.GetSingleAccomplishment(id));
+        }
+
+        [HttpPost("accomplishmentEdit/{id}")]
+        public IActionResult AccomplishmentEdit([FromForm]AccomplishmentViewModel model,int id)
+        {
+            if(model.Id == id && ModelState.IsValid)
+            {
+                model = _accomplishment.UpdateAccomplishmnet(model);
+            }
+            return RedirectToAction("List");
+        }
 
         public  IActionResult Create()
         {
