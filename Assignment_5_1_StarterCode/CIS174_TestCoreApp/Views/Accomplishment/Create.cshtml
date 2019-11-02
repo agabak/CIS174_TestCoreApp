@@ -1,0 +1,38 @@
+﻿@model PersonAccomplishmentViewModel
+
+<div class="container">
+    <div>
+        <hr />
+    </div>
+    <h1>Create</h1>
+      <div asp-validation-summary="ModelOnly"></div>
+      <form asp-action="Create" asp-controller="Accomplishment">
+          <div class="form-group">
+              <label asp-for="FirstName"></label>
+              <input asp-for="FirstName" class="form-control" />
+              <span asp-validation-for="FirstName"></span>
+          </div>
+          <div class="form-group">
+              <label asp-for="LastName"></label>
+              <input asp-for="LastName" class="form-control" />
+              <span asp-validation-for="LastName" class="alert-danger"></span>
+          </div>
+          <div class="form-group">
+              <label asp-for="City"></label>
+              <input asp-for="City" class="form-control" />
+              <span asp-validation-for="City" class="alert-danger"></span>
+          </div>
+          <div class="form-group">
+              <label asp-for="State"></label>
+              <input asp-for="State" class="form-control" />
+              <span asp-validation-for="State" class="alert-danger"></span>
+          </div>
+          <div class="form-group">
+              <label asp-for="DateOfBirth"></label>
+              <input asp-for="DateOfBirth" class="form-control" />
+              <span asp-validation-for="DateOfBirth" class="alert-danger"></span>
+          </div>
+          <a class="btn btn-primary" asp-action="List" asp-controller="Accomplishment">Cancel</a>
+          <button type="submit" class="btn btn-success">Save</button>
+      </form>
+</div>

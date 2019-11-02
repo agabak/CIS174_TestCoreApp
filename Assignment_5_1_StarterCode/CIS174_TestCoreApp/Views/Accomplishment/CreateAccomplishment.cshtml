@@ -1,13 +1,13 @@
-﻿@model AccomplishmentViewModel
+﻿@model CreateAccomplishmentViewModel
 
 <div class="container">
     <div>
         <hr />
     </div>
-    <h1>Edit</h1>
-    <form asp-action="AccomplishmentEdit" asp-controller="Accomplishment" asp-route-id="@Model.Id">
+    <h1>Create</h1>
+    <form asp-action="CreateAccomplishment" asp-controller="Accomplishment" asp-route-id="@Model.PersonId">
         <div>
-            <input asp-for="Id" type="hidden" />
+            <input asp-for="PersonId" type="hidden" />
         </div>
         <div class="form-group">
             <label asp-for="Name"></label>
@@ -19,8 +19,8 @@
             <input asp-for="DateOfAccomplishment" class="form-control" />
             <span asp-validation-for="DateOfAccomplishment" class="alert-danger"></span>
         </div>
-        
+
         <a class="btn btn-primary" asp-action="List" asp-controller="Accomplishment">Cancel</a>
-        <button type="submit" class="btn btn-success">Update</button>
+        <button type="submit" class="btn btn-success">Save</button>
     </form>
 </div>

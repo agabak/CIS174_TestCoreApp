@@ -8,6 +8,9 @@ namespace CIS174_TestCoreApp.Models
         [Required]
         public string Name { get; set; }
         [Required]
+        [Display(Name ="Date of Accomplishment")]
         public string DateOfAccomplishment { get; set; }
+        public int PersonId { get; set; }
+
     }
 }

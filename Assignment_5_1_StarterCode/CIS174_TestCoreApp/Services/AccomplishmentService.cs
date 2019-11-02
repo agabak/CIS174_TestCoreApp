@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CIS174_TestCoreApp.Data;
+using CIS174_TestCoreApp.Entities;
 using CIS174_TestCoreApp.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -107,6 +108,37 @@ namespace CIS174_TestCoreApp.Services
             }
 
             return model;
+        }
+
+        public bool Create(PersonAccomplishmentViewModel model)
+        {
+            var person = new Person
+                       {
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            Birthdate = model.DateOfBirth,
+                            City = model.City,
+                            State = model.State
+                         };
+            _context.People.Add(person);
+
+            if (_context.SaveChanges() > -1) return true;
+            return false;
+        }
+
+        public bool CreateAccomplishment(CreateAccomplishmentViewModel model)
+        {
+            var accomplishment = new Accomplishment
+                        {
+                            Name = model.Name,
+                            DateOfAccomplishment = model.DateOfAccomplishment,
+                            PersonId = model.PersonId
+                        };
+            _context.Accomplishments.Add(accomplishment);
+
+            if (_context.SaveChanges() > -1) return true;
+
+            return false;
         }
     }
 }  

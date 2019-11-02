@@ -14,5 +14,7 @@ namespace CIS174_TestCoreApp.Services
         PersonDetailAccomplishmentViewModel Edit(PersonDetailAccomplishmentViewModel model);
         AccomplishmentViewModel GetSingleAccomplishment(int id);
         AccomplishmentViewModel UpdateAccomplishmnet(AccomplishmentViewModel model);
+        bool Create(PersonAccomplishmentViewModel model);
+        bool CreateAccomplishment(CreateAccomplishmentViewModel model);
     }
 }

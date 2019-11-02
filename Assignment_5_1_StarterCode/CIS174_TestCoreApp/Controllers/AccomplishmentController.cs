@@ -72,5 +72,35 @@ namespace CIS174_TestCoreApp.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Create([FromForm] PersonAccomplishmentViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                if (_accomplishment.Create(model)) return RedirectToAction("List");
+            }
+            ModelState.AddModelError("", "Fail to create user");
+            return View(model);
+        }
+
+        [HttpGet("createAccomplishment/{id}")]
+        public IActionResult CreateAccomplishment(int id)
+        {
+            var model = new CreateAccomplishmentViewModel { PersonId = id };
+            return View(model);
+        }
+
+        [HttpPost("createAccomplishment/{id}")]
+        public IActionResult CreateAccomplishment([FromForm]CreateAccomplishmentViewModel model, int id)
+        {
+            if(ModelState.IsValid)
+            {
+                model.PersonId = id;
+                if (_accomplishment.CreateAccomplishment(model)) return RedirectToAction("List");
+            }
+            return View(model);
+        }
+
     }
 }

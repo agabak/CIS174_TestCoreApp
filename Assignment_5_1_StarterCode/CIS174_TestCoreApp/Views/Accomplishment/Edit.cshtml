@@ -37,11 +37,11 @@
                 <div>
                     <input asp-for="@accomplishment.Id" type="hidden" />
                 </div>
-                <a asp-action="AccomplishmentEdit" asp-controller="Accomplishment" asp-route-id="@accomplishment.Id">Edit</a>
+                <a class="btn btn-sm btn-default" asp-action="AccomplishmentEdit" asp-controller="Accomplishment" asp-route-id="@accomplishment.Id">Edit</a><br />
                 <input  asp-for="@accomplishment.Name" class="form-control" disabled />
             </div>
         }
-        <a class="btn btn-primary" asp-action="Detail" asp-controller="Accomplishment">Cancel >></a>
+        <a class="btn btn-primary" asp-action="Detail" asp-controller="Accomplishment">Cancel</a>
         <button type="submit" class="btn btn-success">Update</button>
     </form>
 </div>
