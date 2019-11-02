@@ -68,6 +68,10 @@ namespace CIS174_TestCoreApp
                 routes.MapRoute(
                      name: "students",
                     template: "{controller=Student}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "Accomplishment",
+                     template : "{controller= Accomplishment}/{action=List}/{id?}");
                   
             });
         }

@@ -2,17 +2,25 @@
 
 <div class="row">
     <div class="col-md-6 col-md-offset-4">
-
+       
     </div>
-    <div class="col-md-6 col-md-offset-4">
-        <h1>@Model.LastName  -   @Model.FirstName</h1>
+    <div class ="row">
+    <div>
         <div class="col-md-4">
-            <span>
-                City : @Model.City
-                State: @Model.State
-            </span>
         </div>
-        <div class="col-md-4">
+    </div>
+        <div class="col-md- 4-md-offset-8">   
+            <h2>@Model.LastName  -   @Model.FirstName</h2>
+            <div class="col-md-4">
+                <h3>City : @Model.City</h3>
+                <h3>State: @Model.State</h3>
+                <h3><a asp-area="" asp-action="Delete" asp-controller="Accomplishment" asp-route-id="@Model.PersonId">Delete</a>
+                 | <a asp-area="" asp-action="Edit" asp-controller="Accomplishment" asp-route-id="@Model.PersonId">Edit</a>
+                </h3>
+               <h3><a asp-area="" asp-controller="Accomplishment" asp-action="List">Back to List</a></h3> 
+            </div>
+        </div>
+        <div class="col-md-6">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -31,5 +39,6 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 </div>

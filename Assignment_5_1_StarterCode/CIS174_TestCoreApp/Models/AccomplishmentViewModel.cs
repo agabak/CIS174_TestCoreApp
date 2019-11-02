@@ -8,6 +8,6 @@ namespace CIS174_TestCoreApp.Models
     public class AccomplishmentViewModel
     {
         public string Name { get; set; }
-        public DateTime DateOfAccomplishment { get; set; }
+        public string DateOfAccomplishment { get; set; }
     }
 }

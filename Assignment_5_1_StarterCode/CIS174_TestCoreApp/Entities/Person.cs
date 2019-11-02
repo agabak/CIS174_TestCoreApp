@@ -13,6 +13,7 @@ namespace CIS174_TestCoreApp.Entities
         public DateTime Birthdate { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+        public bool IsDeleted { get; set; }
 
         public virtual ICollection<Accomplishment> Accomplishments { get; set; }
 
