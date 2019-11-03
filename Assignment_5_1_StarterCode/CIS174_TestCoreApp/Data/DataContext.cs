@@ -13,6 +13,8 @@ namespace CIS174_TestCoreApp.Data
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Person> People { get; set; }
         public DbSet<Accomplishment> Accomplishments { get; set; }
+        public DbSet<LogsRequestAndResponse> logsRequestAndResponses { get; set; }
+
 
     }       
 }

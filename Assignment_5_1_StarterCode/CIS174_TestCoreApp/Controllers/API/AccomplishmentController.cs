@@ -1,4 +1,5 @@
-﻿using CIS174_TestCoreApp.Models;
+﻿using CIS174_TestCoreApp.Filters;
+using CIS174_TestCoreApp.Models;
 using CIS174_TestCoreApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace CIS174_TestCoreApp.Controllers.API
 {
+    [LogsRequestAndResponseFilter]
     [Route("api/[controller]")]
     [ApiController]
     public class AccomplishmentController : ControllerBase
