@@ -48,7 +48,8 @@ namespace CIS174_TestCoreApp.Services
                                         {
                                             Id = y.AccomplishmentId,
                                             Name = y.Name,
-                                            DateOfAccomplishment = y.DateOfAccomplishment.ToString("MM/dd/yyyy")
+                                            DateOfAccomplishment = y.DateOfAccomplishment.ToString("MM/dd/yyyy"),
+                                            PersonId = y.PersonId
                                         })
                                     })
                                       .FirstOrDefault(x => x.PersonId == id);
