@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CIS174_TestCoreApp.Data;
+using CIS174_TestCoreApp.Filters;
 using CIS174_TestCoreApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,15 +32,14 @@ namespace CIS174_TestCoreApp
 
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IAccomplishmentService, AccomplishmentService>();
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+   
 
+            services.AddScoped<ValidateModelAttribute>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(config =>
+                    {
+                        config.Filters.Add(typeof(CustomExceptionFilter));
+                    }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,8 +57,7 @@ namespace CIS174_TestCoreApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
-
+       
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 namespace CIS174_TestCoreApp.Controllers.API
 {
     [LogsRequestAndResponseFilter]
-    [CustomExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]
     public class AccomplishmentController : ControllerBase
@@ -40,13 +39,13 @@ namespace CIS174_TestCoreApp.Controllers.API
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidateModelAttribute))]
         public IActionResult Post(PersonAccomplishmentViewModel model)
-        {
-            if(ModelState.IsValid)
-            {
-                if (_accomplishment.Create(model)) return Ok();
-            }
+        {        
+           if (_accomplishment.Create(model)) return Ok();
+
             return BadRequest();
+            
         }
 
         [HttpPost("{createAccomplishment}")]
