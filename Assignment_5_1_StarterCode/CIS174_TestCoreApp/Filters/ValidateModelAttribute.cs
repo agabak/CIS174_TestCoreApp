@@ -11,7 +11,6 @@ namespace CIS174_TestCoreApp.Filters
             {
                 context.Result = new BadRequestObjectResult(context.ModelState);
             }
-            base.OnActionExecuting(context);
         }
     }
 }

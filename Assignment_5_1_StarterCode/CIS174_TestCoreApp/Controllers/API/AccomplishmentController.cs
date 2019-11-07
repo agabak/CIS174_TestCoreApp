@@ -71,6 +71,7 @@ namespace CIS174_TestCoreApp.Controllers.API
         }
 
         [HttpPut]
+        [ValidatePersonInfoFilter]
         public IActionResult Put(PersonDetailAccomplishmentViewModel model)
         {
             if(ModelState.IsValid)
