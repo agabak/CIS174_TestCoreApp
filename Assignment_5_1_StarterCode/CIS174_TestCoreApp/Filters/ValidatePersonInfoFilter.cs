@@ -1,10 +1,6 @@
 ﻿using CIS174_TestCoreApp.Services;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.IO;
-using System.Text;
 
 namespace CIS174_TestCoreApp.Filters
 {
@@ -18,12 +14,26 @@ namespace CIS174_TestCoreApp.Filters
         }
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            var model = context.HttpContext.Request.Body.GetType();
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            var model = context.ActionArguments["model"];
+            var firstName = (string) context.ActionArguments["firstName"];
+            int personId = (int) context.ActionArguments["personId"];
+
+            var person = _service.GetAccomplisment(personId);
+
+            if(person == null)
+            {
+                context.Result = new NotFoundObjectResult(context.ModelState);
+            }
+
+            if(person.FirstName != firstName)
+            {
+                // i return bad request 
+                context.Result = new BadRequestObjectResult(context.ModelState);
+            }
+
         }
     }
 
