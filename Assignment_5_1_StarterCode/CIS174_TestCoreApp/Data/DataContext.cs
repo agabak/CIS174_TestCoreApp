@@ -1,9 +1,10 @@
 ﻿using CIS174_TestCoreApp.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIS174_TestCoreApp.Data
 {
-    public class DataContext: DbContext
+    public class DataContext: IdentityUserContext<UserPerson>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -15,6 +16,7 @@ namespace CIS174_TestCoreApp.Data
         public DbSet<Accomplishment> Accomplishments { get; set; }
         public DbSet<LogsRequestAndResponse> logsRequestAndResponses { get; set; }
         public DbSet<ErrorLog> ErrorLogs { get; set; }
+        public DbSet<UserPerson> UserPeople { get; set; }
 
 
     }       

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CIS174_TestCoreApp.Data;
+using CIS174_TestCoreApp.Entities;
 using CIS174_TestCoreApp.Filters;
 using CIS174_TestCoreApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +30,14 @@ namespace CIS174_TestCoreApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+           
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<UserPerson, IdentityRole>(config =>
+            {
+                config.User.RequireUniqueEmail = true;
+
+            }).AddEntityFrameworkStores<DataContext>(); 
 
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IAccomplishmentService, AccomplishmentService>();
@@ -57,21 +66,23 @@ namespace CIS174_TestCoreApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-       
+
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+            routes.MapRoute(
+                name: "default",
+                template: "{controller=Home}/{action=Index}/{id?}");
 
-                routes.MapRoute(
-                     name: "students",
-                    template: "{controller=Student}/{action=Index}/{id?}");
+            routes.MapRoute(
+                 name: "students",
+                template: "{controller=Student}/{action=Index}/{id?}");
 
-                routes.MapRoute(
-                    name: "Accomplishment",
-                     template : "{controller= Accomplishment}/{action=List}/{id?}");
-                  
+            routes.MapRoute(
+                name: "Accomplishment",
+                 template: "{controller= Accomplishment}/{action=List}/{id?}");
+            routes.MapRoute(
+                    name: "Account",
+                    template: "{controller=Account}/{action=Register}/{id?}");  
             });
         }
     }
