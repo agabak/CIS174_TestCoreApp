@@ -30,10 +30,11 @@ namespace CIS174_TestCoreApp.Filters
                 context.Result = new NotFoundObjectResult(context.ModelState);
             }
 
-            if(person.FirstName != person.FirstName)
+            if(person.FirstName != model.FirstName)
             {
-                // i return bad request 
-                context.Result = new BadRequestObjectResult(context.ModelState);
+                //return bad request 
+                context.ModelState.AddModelError("", "wrong first name");
+                context.Result = new BadRequestObjectResult("First Name must match");
             }
 
         }
