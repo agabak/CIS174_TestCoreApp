@@ -1,4 +1,5 @@
-﻿using CIS174_TestCoreApp.Services;
+﻿using CIS174_TestCoreApp.Models;
+using CIS174_TestCoreApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -17,18 +18,19 @@ namespace CIS174_TestCoreApp.Filters
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
-        {
-            var firstName = (string) context.ActionArguments["firstName"];
-            int personId = (int) context.ActionArguments["personId"];
+        {   
+            // convert action argument to  view model
+            var model = (PersonDetailAccomplishmentViewModel)context.ActionArguments["model"];
 
-            var person = _service.GetAccomplisment(personId);
+
+            var person = _service.GetAccomplisment(model.PersonId);
 
             if(person == null)
             {
                 context.Result = new NotFoundObjectResult(context.ModelState);
             }
 
-            if(person.FirstName != firstName)
+            if(person.FirstName != person.FirstName)
             {
                 // i return bad request 
                 context.Result = new BadRequestObjectResult(context.ModelState);

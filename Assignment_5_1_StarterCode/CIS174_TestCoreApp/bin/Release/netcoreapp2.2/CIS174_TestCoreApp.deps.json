@@ -26,6 +26,7 @@
         "dependencies": {
           "DataAnnotationsExtensions": "5.0.1.27",
           "Microsoft.AspNetCore.App": "2.2.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.EntityFrameworkCore": "2.2.0",
           "Microsoft.EntityFrameworkCore.Design": "2.2.0",
