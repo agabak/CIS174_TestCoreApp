@@ -1,12 +1,8 @@
-﻿using CIS174_TestCoreApp.Data;
-using CIS174_TestCoreApp.Filters;
+﻿using CIS174_TestCoreApp.Filters;
 using CIS174_TestCoreApp.Models;
 using CIS174_TestCoreApp.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CIS174_TestCoreApp.Controllers.API
 {

@@ -35,17 +35,22 @@ namespace CIS174_TestCoreApp.Controllers
                                 {
                                     FirstName = model?.FirstName,
                                     LastName = model?.LastName,
-                                    Email = model?.Username,
-                                    UserName = model?.Email,
+                                    Email = model?.Email,
+                                    UserName = model?.Username,
                                     PhoneNumber = model?.PhoneNumber
                                 };
 
-               var isCreated = await _userManager.CreateAsync(storeUser, model.Password);
+             var isCreated = await _userManager.CreateAsync(storeUser, model.Password);
 
-               if (isCreated.Succeeded) return RedirectToAction("Login", "Account");
-            
-                 ModelState.AddModelError("", "Enable to register a user");
-                 return View(model);
+            if (isCreated.Succeeded)
+            {
+                await _signInManager.SignInAsync(storeUser, false, null);
+                return RedirectToAction("Home", "Index");
+
+            }
+                
+            ModelState.AddModelError("", "Enable to register a user");
+            return View(model);
         }
 
         public IActionResult Login()
@@ -65,7 +70,7 @@ namespace CIS174_TestCoreApp.Controllers
                 return View(model);
             }
 
-            if (!await _userManager.CheckPasswordAsync(user, model.Password).ConfigureAwait(true))
+            if (!await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 ModelState.AddModelError("", "enable to login");
                 return View(model);

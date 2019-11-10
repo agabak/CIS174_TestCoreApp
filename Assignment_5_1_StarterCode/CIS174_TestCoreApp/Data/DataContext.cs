@@ -1,6 +1,8 @@
 ﻿using CIS174_TestCoreApp.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace CIS174_TestCoreApp.Data
 {
@@ -17,8 +19,14 @@ namespace CIS174_TestCoreApp.Data
         public DbSet<LogsRequestAndResponse> logsRequestAndResponses { get; set; }
         public DbSet<ErrorLog> ErrorLogs { get; set; }
         public DbSet<UserPerson> UserPeople { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+           builder.Entity<IdentityUserRole<Guid>>().HasKey(p => new { p.UserId, p.RoleId });
 
+            base.OnModelCreating(builder);
+        }
     }       
 }
         
