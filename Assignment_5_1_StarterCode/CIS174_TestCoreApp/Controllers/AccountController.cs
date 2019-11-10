@@ -45,7 +45,7 @@ namespace CIS174_TestCoreApp.Controllers
             if (isCreated.Succeeded)
             {
                 await _signInManager.SignInAsync(storeUser, false, null);
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Index", "Home");
 
             }
                 
@@ -67,12 +67,6 @@ namespace CIS174_TestCoreApp.Controllers
             if (user == null)
             {
                 ModelState.AddModelError("", "User doesn't exist");
-                return View(model);
-            }
-
-            if (!await _userManager.CheckPasswordAsync(user, model.Password))
-            {
-                ModelState.AddModelError("", "enable to login");
                 return View(model);
             }
 

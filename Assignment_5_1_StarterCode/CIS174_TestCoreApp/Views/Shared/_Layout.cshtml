@@ -51,17 +51,18 @@
                         <a>
                             @if (User.Identity.IsAuthenticated)
                             {<span>Hello</span> @User.Identity.Name}
-                    </a>
-                </li>
-                @if (!User.Identity.IsAuthenticated)
-                {
-                    <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-                }
-                else
-                {
-                    <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
-                }
+                        </a>
+                    </li>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Manager" asp-action="Update">Manage Your Account</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                    }
                 </ul>
             </div>
         </div>
