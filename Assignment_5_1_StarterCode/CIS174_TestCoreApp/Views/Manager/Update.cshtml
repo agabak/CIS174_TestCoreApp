@@ -4,7 +4,8 @@
         <h2>Update User Information</h2>
     </div>
     <div asp-validation-summary="All"></div>
-    <form asp-action="Update" asp-controller="UserManager">
+    <form asp-action="Update" asp-controller="Manager">
+        <input hidden asp-for="UserName" />
         <div class="form-group">
             <label asp-for="UserName"></label>
             <input asp-for="UserName" class="form-control" disabled />

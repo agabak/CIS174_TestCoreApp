@@ -41,6 +41,7 @@ namespace CIS174_TestCoreApp
 
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IAccomplishmentService, AccomplishmentService>();
+            services.AddScoped<IPersonManagerService, PersonManagerService>();
    
 
             services.AddScoped<ValidateModelAttribute>();

@@ -1,5 +1,6 @@
 ﻿using CIS174_TestCoreApp.Entities;
 using CIS174_TestCoreApp.Models;
+using CIS174_TestCoreApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,32 +14,32 @@ namespace CIS174_TestCoreApp.Controllers
     [Authorize]
     public class ManagerController : Controller
     {
-        private readonly UserManager<UserPerson> _userManager;
+        private readonly IPersonManagerService _service;
 
-        public ManagerController(UserManager<UserPerson> userManager)
+        public ManagerController(IPersonManagerService service)
         {
-            _userManager = userManager;     
+            _service = service;     
         }
 
         public async Task<IActionResult> Update()
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            if(user == null)
+            var manageUser = await _service.FindUserByName(User.Identity.Name);
+            if (manageUser == null)
             {
-                ModelState.AddModelError("", "something went wrong");
+                ModelState.TryAddModelError("", "Unable to get the user");
                 return View();
             }
-
-            var manageUser = new UserManagerUpdateCommandModel
-                            {
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                EmailAddress = user.Email,
-                                PhoneNumber = user.PhoneNumber,
-                                UserName = user.UserName,
-                            };
-
             return View(manageUser);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(UserManagerUpdateCommandModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            if (await _service.UpdateUser(model)) return RedirectToAction("Index", "Home");
+
+            ModelState.TryAddModelError("", "Somthing went wrong unable to update"); 
+            return View(model);
         }
     }
 }
