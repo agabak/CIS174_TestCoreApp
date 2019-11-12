@@ -45,6 +45,24 @@ namespace CIS174_TestCoreApp.Services
             return manageUser;
         }
 
+        public async Task<bool> Login(LoginViewModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model?.Username);
+
+            if (user == null) return false;
+  
+            var signIn = await _signInManager.PasswordSignInAsync(user, model.Password, model.IsRememberMe, false);
+
+            if (signIn.Succeeded) return true;
+
+            return false;
+        }
+
+        public void Logout()
+        {
+            _signInManager.SignOutAsync();
+        }
+
         public async Task<bool> Register(RegisterCommandModel model)
         {
             var storeUser = new UserPerson
