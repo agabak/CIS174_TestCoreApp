@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CIS174_TestCoreApp.Data;
 using CIS174_TestCoreApp.Entities;
@@ -13,12 +14,15 @@ namespace CIS174_TestCoreApp.Services
     {
         private readonly UserManager<UserPerson> _userManager;
         private readonly DataContext _context;
+        private readonly SignInManager<UserPerson> _signInManager;
 
         public PersonManagerService(UserManager<UserPerson> userManager,
-                                                    DataContext context)
+                                   SignInManager<UserPerson> signInManager,
+                                   DataContext context)
         {
             _userManager = userManager;
             _context = context;
+            _signInManager = signInManager;
 
         }
 
@@ -40,6 +44,32 @@ namespace CIS174_TestCoreApp.Services
 
             return manageUser;
         }
+
+        public async Task<bool> Register(RegisterCommandModel model)
+        {
+            var storeUser = new UserPerson
+            {
+                FirstName = model?.FirstName,
+                LastName = model?.LastName,
+                Email = model?.Email,
+                UserName = model?.Username,
+                PhoneNumber = model?.PhoneNumber
+            };
+
+            var isCreated = await _userManager.CreateAsync(storeUser, model.Password);
+
+            if (isCreated.Succeeded)
+            {
+                var claim = new Claim("FullName", model.FirstName + ", " + model.LastName);
+
+                await _userManager.AddClaimAsync(storeUser, claim);
+                await _signInManager.SignInAsync(storeUser, false, null);
+
+                return true;
+            }
+
+            return false;
+       }
 
         public async Task<bool> UpdateUser(UserManagerUpdateCommandModel model)
         {

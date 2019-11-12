@@ -7,5 +7,6 @@ namespace CIS174_TestCoreApp.Services
     {
         Task<UserManagerUpdateCommandModel> FindUserByName(string username);
         Task<bool> UpdateUser(UserManagerUpdateCommandModel model);
+        Task<bool> Register(RegisterCommandModel model);
     }
 }

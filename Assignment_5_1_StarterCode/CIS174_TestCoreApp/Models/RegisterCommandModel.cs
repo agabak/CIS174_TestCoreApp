@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CIS174_TestCoreApp.Models
 {
-    public class RegisterViewModel
+    public class RegisterCommandModel
     {
         [Required]
         [Display(Name = "First Name")]

@@ -1,5 +1,6 @@
 ﻿using CIS174_TestCoreApp.Entities;
 using CIS174_TestCoreApp.Models;
+using CIS174_TestCoreApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,12 +14,14 @@ namespace CIS174_TestCoreApp.Controllers
     {
         private readonly UserManager<UserPerson> _userManager;
         private readonly SignInManager<UserPerson> _signInManager;
+        private readonly IPersonManagerService _service;
 
         public AccountController(SignInManager<UserPerson> signInManager, 
-                                 UserManager<UserPerson> userManager)
+                                 UserManager<UserPerson> userManager, IPersonManagerService service)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _service = service;
         }
 
         public IActionResult Register()
@@ -27,27 +30,13 @@ namespace CIS174_TestCoreApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterCommandModel model)
         {
             if (!ModelState.IsValid) return View(model);
-
-               var storeUser = new UserPerson
-                                {
-                                    FirstName = model?.FirstName,
-                                    LastName = model?.LastName,
-                                    Email = model?.Email,
-                                    UserName = model?.Username,
-                                    PhoneNumber = model?.PhoneNumber
-                                };
-
-             var isCreated = await _userManager.CreateAsync(storeUser, model.Password);
-
-            if (isCreated.Succeeded)
-            {
-                await _signInManager.SignInAsync(storeUser, false, null);
-                return RedirectToAction("Index", "Home");
-
-            }
+            var isRegostered = await _service.Register(model);
+         
+            if (isRegostered) return RedirectToAction("Index", "Home");
+           
                 
             ModelState.AddModelError("", "Enable to register a user");
             return View(model);
