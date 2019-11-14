@@ -78,9 +78,21 @@ namespace CIS174_TestCoreApp.Services
 
             if (isCreated.Succeeded)
             {
-                var claim = new Claim("FullName", model.FirstName + ", " + model.LastName);
-
-                await _userManager.AddClaimAsync(storeUser, claim);
+                if(model.Email == "valatorre@dmacc.edu" || model.Email == "adminagaba@gmail.com")
+                {
+                    var claims = new List<Claim>
+                    {
+                        new Claim("FullName", model.FirstName + ", " + model.LastName),
+                        new Claim("Admin", model.Email)
+                    };
+                    await _userManager.AddClaimsAsync(storeUser, claims);
+                }else
+                {
+                    var claim = new Claim("FullName", model.FirstName + ", " + model.LastName);
+                    await _userManager.AddClaimAsync(storeUser, claim);
+                }
+                
+             
                 await _signInManager.SignInAsync(storeUser, false, null);
 
                 return true;
