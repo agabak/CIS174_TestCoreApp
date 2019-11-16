@@ -1,20 +1,24 @@
-﻿using CIS174_TestCoreApp.Models;
+﻿using CIS174_TestCoreApp.Entities;
+using CIS174_TestCoreApp.Models;
 using CIS174_TestCoreApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CIS174_TestCoreApp.Controllers
 {
-    [Authorize("IsAdmin")]
     public class AccomplishmentController : Controller
     {
         private readonly IAccomplishmentService _accomplishment;
+        private readonly IAuthorizationService _service;
 
-        public AccomplishmentController(IAccomplishmentService accomplishment)
+        public AccomplishmentController(IAccomplishmentService accomplishment, IAuthorizationService service)
         {
             _accomplishment = accomplishment;
+            _service = service;
         }
 
+        [Authorize("IsAdmin")]
         public IActionResult List()
         {
             var user = this.User.HasClaim(c => c.Type == "Admin") || this.User.HasClaim(c => c.Type == "Email");
@@ -36,7 +40,7 @@ namespace CIS174_TestCoreApp.Controllers
             return View(_accomplishment.GetAccomplisment(id));
         }
 
-        [Authorize("CanEdit")]
+        [Authorize]
         [HttpGet("edit/{id}")]
         public IActionResult Edit(int id)
         {
@@ -44,11 +48,23 @@ namespace CIS174_TestCoreApp.Controllers
         }
 
         [HttpPost("edit/{id}")]
-        public IActionResult Edit([FromForm] PersonDetailAccomplishmentViewModel model, int id)
+        public async Task<IActionResult> Edit([FromForm] PersonDetailAccomplishmentViewModel model, int id)
         {
             if (ModelState.IsValid && model.PersonId == id)
             {
                 model = _accomplishment.Edit(model);
+
+                var person = new Person
+                            {
+                                LastName = model.LastName,
+                                State = model.State
+                            };
+
+                var authResult = await _service.AuthorizeAsync(User, person, "CanEditContent");
+                if(!authResult.Succeeded)
+                {
+                    return new  ForbidResult();
+                }
             }
             return View(model);
         }

@@ -72,7 +72,9 @@ namespace CIS174_TestCoreApp.Services
                 Email = model?.Email,
                 UserName = model?.Username,
                 PhoneNumber = model?.PhoneNumber,
-                DateOfBirth  = model.DateOfBirth
+                DateOfBirth  = model.DateOfBirth,
+                State = model?.State,
+                City = model?.City
             };
 
             var isCreated = await _userManager.CreateAsync(storeUser, model.Password);

@@ -36,5 +36,9 @@ namespace CIS174_TestCoreApp.Models
         [DataType(DataType.Date)]
         [Display(Name ="Date Of Birth")]
         public DateTime DateOfBirth { get; set; }
+        [Required]
+        public string City { get; set; }
+        [Required]
+        public string State { get; set; }
     }
 }
