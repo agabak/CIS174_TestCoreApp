@@ -2,6 +2,7 @@
 using CIS174_TestCoreApp.Entities;
 using CIS174_TestCoreApp.Filters;
 using CIS174_TestCoreApp.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -33,12 +34,17 @@ namespace CIS174_TestCoreApp
             services.AddAuthentication();
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("IsAdmin", policyBuilder => policyBuilder.RequireClaim("Admin"));
+                options.AddPolicy("IsAdmin", policyBuilder => policyBuilder.AddRequirements(
+                                                 new MinimumAgeRequirement(18),
+                                                 new IsActiveUser()));
                 options.AddPolicy("CanEdit", policyBuilder => policyBuilder.RequireClaim("ContentEditor"));
             });
 
+            services.AddScoped<IAuthorizationRequirement, IsActiveUser>();
+            services.AddScoped<IAuthorizationHandler, IsActiveUserHandler>();
+            services.AddSingleton<IAuthorizationHandler, MinimumAgeHandler>();
             //services.AddIdentity<UserPerson, UserRole>(config =>
-            //{
+            //{  AuthorizationPolicyBuilder
             //    config.User.RequireUniqueEmail = true;
 
             //}).AddEntityFrameworkStores<DataContext>(); 

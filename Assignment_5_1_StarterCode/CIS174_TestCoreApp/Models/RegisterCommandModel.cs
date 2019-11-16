@@ -32,5 +32,9 @@ namespace CIS174_TestCoreApp.Models
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name ="Date Of Birth")]
+        public DateTime DateOfBirth { get; set; }
     }
 }
