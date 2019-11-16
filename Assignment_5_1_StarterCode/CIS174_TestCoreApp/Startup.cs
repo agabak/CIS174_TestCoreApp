@@ -24,14 +24,17 @@ namespace CIS174_TestCoreApp
         public void ConfigureServices(IServiceCollection services)
         {
  
-            services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("azureConnect")));
             services.AddDefaultIdentity<UserPerson>(confiq => 
                 {
                    confiq.User.RequireUniqueEmail = true;
                 }).AddEntityFrameworkStores<DataContext>();
 
             services.AddAuthentication();
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policyBuilder => policyBuilder.RequireClaim("Email", "agaba_k@hotmail.com", "valatorre@dmacc.edu"));
+            });
 
             //services.AddIdentity<UserPerson, UserRole>(config =>
             //{
@@ -42,8 +45,7 @@ namespace CIS174_TestCoreApp
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IAccomplishmentService, AccomplishmentService>();
             services.AddScoped<IPersonManagerService, PersonManagerService>();
-   
-
+           
             services.AddScoped<ValidateModelAttribute>();
 
             services.AddMvc(config =>

@@ -1,10 +1,6 @@
 ﻿using CIS174_TestCoreApp.Models;
 using CIS174_TestCoreApp.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CIS174_TestCoreApp.Controllers
 {
@@ -19,6 +15,8 @@ namespace CIS174_TestCoreApp.Controllers
 
         public IActionResult List()
         {
+            var user = this.User.HasClaim(c => c.Type == "Admin") || this.User.HasClaim(c => c.Type == "Email");
+
             return View(_accomplishment.GetAccomplishments());
         }
 
