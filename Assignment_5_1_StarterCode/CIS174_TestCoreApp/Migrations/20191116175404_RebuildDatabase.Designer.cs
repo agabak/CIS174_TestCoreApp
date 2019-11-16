@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIS174_TestCoreApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191108015716_AddIdentityUser")]
-    partial class AddIdentityUser
+    [Migration("20191116175404_RebuildDatabase")]
+    partial class RebuildDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -160,6 +160,10 @@ namespace CIS174_TestCoreApp.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
+
                     b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
@@ -198,6 +202,22 @@ namespace CIS174_TestCoreApp.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("CIS174_TestCoreApp.Entities.UserRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("NormalizedName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRoles");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -218,11 +238,29 @@ namespace CIS174_TestCoreApp.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<string>("LoginProvider");
 
+                    b.Property<string>("ProviderDisplayName");
+
                     b.Property<string>("ProviderKey");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("IdentityUserLogin<Guid>");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -236,13 +274,26 @@ namespace CIS174_TestCoreApp.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId");
+
+                    b.Property<Guid>("RoleId");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.ToTable("IdentityUserRole<Guid>");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value");
 

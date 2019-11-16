@@ -23,8 +23,10 @@ namespace CIS174_TestCoreApp.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-           builder.Entity<IdentityUserRole<Guid>>().HasKey(p => new { p.UserId, p.RoleId });
-
+            builder.Entity<IdentityUserRole<Guid>>().HasKey(p => new { p.UserId, p.RoleId });
+            builder.Entity<UserPerson>().Property<bool>(p => p.IsActive).HasDefaultValue<bool>(true);
+            builder.Entity<IdentityUserLogin<Guid>>().HasKey(p => p.UserId);
+           
             base.OnModelCreating(builder);
         }
     }       

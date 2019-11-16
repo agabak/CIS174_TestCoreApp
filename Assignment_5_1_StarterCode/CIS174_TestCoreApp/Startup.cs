@@ -24,7 +24,7 @@ namespace CIS174_TestCoreApp
         public void ConfigureServices(IServiceCollection services)
         {
  
-            services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("azureConnect")));
+            services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<UserPerson>(confiq => 
                 {
                    confiq.User.RequireUniqueEmail = true;
