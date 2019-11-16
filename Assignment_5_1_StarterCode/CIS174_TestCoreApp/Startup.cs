@@ -33,7 +33,8 @@ namespace CIS174_TestCoreApp
             services.AddAuthentication();
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Admin", policyBuilder => policyBuilder.RequireClaim("Email", "agaba_k@hotmail.com", "valatorre@dmacc.edu"));
+                options.AddPolicy("IsAdmin", policyBuilder => policyBuilder.RequireClaim("Admin"));
+                options.AddPolicy("CanEdit", policyBuilder => policyBuilder.RequireClaim("ContentEditor"));
             });
 
             //services.AddIdentity<UserPerson, UserRole>(config =>

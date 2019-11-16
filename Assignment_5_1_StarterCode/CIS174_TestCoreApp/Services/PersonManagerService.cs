@@ -83,7 +83,8 @@ namespace CIS174_TestCoreApp.Services
                     var claims = new List<Claim>
                     {
                         new Claim("FullName", model.FirstName + ", " + model.LastName),
-                        new Claim("Admin", model.Email)
+                        new Claim("Admin", model.Email),
+                        new Claim("ContentEditor", "Edit")
                     };
                     await _userManager.AddClaimsAsync(storeUser, claims);
                 }else

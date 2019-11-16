@@ -1,9 +1,11 @@
 ﻿using CIS174_TestCoreApp.Models;
 using CIS174_TestCoreApp.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CIS174_TestCoreApp.Controllers
 {
+    [Authorize("IsAdmin")]
     public class AccomplishmentController : Controller
     {
         private readonly IAccomplishmentService _accomplishment;
@@ -34,6 +36,7 @@ namespace CIS174_TestCoreApp.Controllers
             return View(_accomplishment.GetAccomplisment(id));
         }
 
+        [Authorize("CanEdit")]
         [HttpGet("edit/{id}")]
         public IActionResult Edit(int id)
         {
