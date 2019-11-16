@@ -21,24 +21,27 @@
         <tbody>
             @foreach (var accomplishment in Model)
             {
-            <tr>
-                <th>@accomplishment.FirstName</th>
-                <td>@accomplishment.LastName</td>
-                <td>@accomplishment.City</td>
-                <td>@accomplishment.State</td>
-                <td>@accomplishment.AccomplishmentCount</td>
-                <td>
-                    <a asp-action="Detail" asp-controller="Accomplishment" asp-route-id="@accomplishment.PersonId">View</a>
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-controller="Accomplishment" asp-route-id="@accomplishment.PersonId">Edit</a>
-                </td>
-            </tr>
+                <tr>
+                    <th>@accomplishment.FirstName</th>
+                    <td>@accomplishment.LastName</td>
+                    <td>@accomplishment.City</td>
+                    <td>@accomplishment.State</td>
+                    <td>@accomplishment.AccomplishmentCount</td>
+                    <td>
+                        <a asp-action="Detail" asp-controller="Accomplishment" asp-route-id="@accomplishment.PersonId">View</a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Accomplishment" asp-route-id="@accomplishment.PersonId">Edit</a>
+                    </td>
+                </tr>
 
             }
         </tbody>
     </table>
-    <div class="row">
-       <a class="btn btn-lg btn-primary" asp-action="Create"  asp-controller="Accomplishment">Create</a>
-    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="row">
+            <a class="btn btn-lg btn-primary" asp-action="Create" asp-controller="Accomplishment">Create</a>
+        </div>
+    }
 </div>

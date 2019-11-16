@@ -85,16 +85,21 @@ namespace CIS174_TestCoreApp.Services
                     {
                         new Claim("FullName", model.FirstName + ", " + model.LastName),
                         new Claim("Admin", model.Email),
-                        new Claim("ContentEditor", "Edit")
+                        new Claim("ContentEditor", "Edit"),
+                        new Claim("DateOfBirth", model.DateOfBirth.ToString())
                     };
                     await _userManager.AddClaimsAsync(storeUser, claims);
                 }else
                 {
-                    var claim = new Claim("FullName", model.FirstName + ", " + model.LastName);
-                    await _userManager.AddClaimAsync(storeUser, claim);
+                    var claims = new List<Claim>
+                    {
+                          new Claim("FullName", model.FirstName + ", " + model.LastName),
+                          new Claim("DateOfBirth", model.DateOfBirth.ToString())
+                    };
+                   
+                    await _userManager.AddClaimsAsync(storeUser, claims);
                 }
                 
-             
                 await _signInManager.SignInAsync(storeUser, false, null);
 
                 return true;
