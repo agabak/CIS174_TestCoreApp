@@ -35,17 +35,20 @@ namespace CIS174_TestCoreApp
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("IsAdmin", policyBuilder => policyBuilder.AddRequirements(
-                                                 new MinimumAgeRequirement(18),
-                                                 new IsActiveUser()));
+                                                 new AdminRequirement(),
+                                                 new IsActiveUser(),
+                                                 new MinimumAgeRequirement(18)));
                 options.AddPolicy("CanEditContent", policyBuilder => policyBuilder.AddRequirements(new ContentEditorRequirement()));
 
                 options.AddPolicy("editor", policyBuilder => policyBuilder.RequireClaim("ContentEditor"));
             });
 
-            services.AddScoped<IAuthorizationRequirement, IsActiveUser>();
+            // services.AddScoped<IAuthorizationRequirement, IsActiveUser>();
+            services.AddScoped<IAuthorizationHandler, AdminHandler>();
             services.AddScoped<IAuthorizationHandler, IsActiveUserHandler>();
             services.AddScoped<IAuthorizationHandler, MinimumAgeHandler>();
             services.AddScoped<IAuthorizationHandler, ContentEditorHandler>();
+   
             //services.AddIdentity<UserPerson, UserRole>(config =>
             //{  AuthorizationPolicyBuilder
             //    config.User.RequireUniqueEmail = true;

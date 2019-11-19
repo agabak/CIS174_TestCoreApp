@@ -31,7 +31,9 @@ namespace CIS174_TestCoreApp.Filters
 
             var appUser = _service.FindByNameAsync(context.User.Identity.Name).Result;
 
-            if (resource.LastName.ToUpper().Equals(appUser.LastName.ToUpper()))
+            if (resource.LastName.ToUpper().Equals(appUser.LastName.ToUpper()) &&
+                resource.FirstName.ToUpper().Equals(appUser.FirstName
+                .ToUpper()))
             {
                 context.Succeed(requirement);
             }
