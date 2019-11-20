@@ -7,6 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Formatting.Compact;
 
 namespace CIS174_TestCoreApp
 {
@@ -14,11 +16,29 @@ namespace CIS174_TestCoreApp
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            Log.Logger = new LoggerConfiguration()
+                            .Enrich.FromLogContext()
+                            .WriteTo.Console(new CompactJsonFormatter())
+                            .CreateLogger();
+             
+            try
+            {
+                Log.Information("Starting up");
+                CreateWebHostBuilder(args).Build().Run();
+
+            }catch(Exception ex)
+            {
+                Log.Fatal(ex, "Host terminated unxpectedly");
+            }finally
+            {
+                Log.CloseAndFlush();
+            }
+           
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                   .UseSerilog()
+                   .UseStartup<Startup>();
     }
 }
