@@ -19,8 +19,12 @@ namespace CIS174_TestCoreApp
             Log.Logger = new LoggerConfiguration()
                             .Enrich.FromLogContext()
                             .WriteTo.Console(new CompactJsonFormatter())
+                            .WriteTo.File(new CompactJsonFormatter(), "./logs/myapp.json")
                             .CreateLogger();
-             
+
+           
+
+
             try
             {
                 Log.Information("Starting up");

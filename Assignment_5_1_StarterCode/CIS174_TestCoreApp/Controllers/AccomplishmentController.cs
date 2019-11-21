@@ -3,6 +3,8 @@ using CIS174_TestCoreApp.Models;
 using CIS174_TestCoreApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace CIS174_TestCoreApp.Controllers
@@ -11,17 +13,22 @@ namespace CIS174_TestCoreApp.Controllers
     {
         private readonly IAccomplishmentService _accomplishment;
         private readonly IAuthorizationService _service;
+        private readonly ILogger _logger;
 
-        public AccomplishmentController(IAccomplishmentService accomplishment, IAuthorizationService service)
+        public AccomplishmentController(IAccomplishmentService accomplishment, 
+                                        IAuthorizationService service,
+                                        ILogger<AccomplishmentController> logger)
         {
             _accomplishment = accomplishment;
             _service = service;
+            _logger = logger;
         }
 
         [Authorize("IsAdmin")]
         public IActionResult List()
         {
             var user = this.User.HasClaim(c => c.Type == "Admin") || this.User.HasClaim(c => c.Type == "Email");
+            _logger.LogInformation("Hello  {UserName}, {TodayDate}", this.User.Identity.Name, DateTime.Now);
 
             return View(_accomplishment.GetAccomplishments());
         }

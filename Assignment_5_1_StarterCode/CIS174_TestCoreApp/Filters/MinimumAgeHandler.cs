@@ -11,7 +11,6 @@ namespace CIS174_TestCoreApp.Filters
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, MinimumAgeRequirement requirement)
         {
-            throw new Exception("Your sick individual");
             if (!context.User.HasClaim(c => c.Type == "DateOfBirth"))
             {
                 return Task.CompletedTask;
