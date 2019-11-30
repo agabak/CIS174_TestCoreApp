@@ -83,9 +83,10 @@ namespace CIS174_TestCoreApp.Services
                                                     DateOfAccomplishment = x.DateOfAccomplishment.ToString("MM/dd/yyyy")
                                                  });
                 _context.SaveChanges();
+                return model;
             }
-
-            return model;
+            return null;
+           
         }
 
         public AccomplishmentViewModel GetSingleAccomplishment(int id)
