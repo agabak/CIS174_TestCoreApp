@@ -20,7 +20,7 @@ namespace CIS174_TestCoreApp.Services
 
         public IEnumerable<PersonAccomplishmentViewModel> GetAccomplishments()
         {
-            return _context.People.Include(x => x.Accomplishments)
+            return _context.People
                                   .Where(x => !x.IsDeleted)
                                   .Select(x => new PersonAccomplishmentViewModel
                                   {
